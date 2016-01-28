@@ -1,12 +1,12 @@
 # disruptor_benchmark
 JMH Benchmark for Conversant Disruptor and LMAX Disruptor
 
-Build benchmark:
+Build:
 
 ```$ mvn -U clean package```
 
 
-Run Benchmark:
+Run:
 
 ```$ java -jar target/benchmarks.jar```
 
