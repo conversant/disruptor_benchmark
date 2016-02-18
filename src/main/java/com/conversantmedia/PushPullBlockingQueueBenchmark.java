@@ -2,6 +2,7 @@ package com.conversantmedia;
 
 import com.conversantmedia.util.concurrent.DisruptorBlockingQueue;
 import com.conversantmedia.util.concurrent.PushPullBlockingQueue;
+import com.conversantmedia.util.concurrent.SpinPolicy;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
 import org.openjdk.jmh.annotations.Fork;
@@ -34,14 +35,22 @@ public class PushPullBlockingQueueBenchmark {
     private BlockingQueue<Long> msgQueue;
 
     private final Runnable addTask = () -> {
+        for(int i=0; i<Run.OFFER_COUNT; i++) {
+            while(!msgQueue.offer(Run.LONGVAL)) {
+                ;
+            }
+        }
+    };
+
+    private final Runnable addWaitingTask = () -> {
         try {
             for(int i=0; i<Run.OFFER_COUNT; i++) {
-                while(!msgQueue.offer(Run.LONGVAL, 1, TimeUnit.MICROSECONDS)) {
-                    Thread.yield();
+                while(!msgQueue.offer(Run.LONGVAL, 1L, TimeUnit.MICROSECONDS)) {
+                    ;
                 }
             }
-        } catch (InterruptedException e) {
-            throw new RuntimeException("Failed!");
+        } catch(final InterruptedException ex) {
+            throw new RuntimeException("Test failed due to interrupt.", ex);
         }
     };
 
@@ -54,15 +63,24 @@ public class PushPullBlockingQueueBenchmark {
     @Benchmark
     public void sendOneM() {
         executor.execute(addTask);
-        try {
             for(int i=0; i<Run.OFFER_COUNT; i++) {
-                while(msgQueue.poll(1, TimeUnit.MICROSECONDS) != Run.LONGVAL) {
-                    Thread.yield();
-
+                while(msgQueue.poll() != Run.LONGVAL) {
+                    ;
                 }
             }
-        } catch (InterruptedException e) {
-            throw new RuntimeException("Failed!");
+    }
+
+    @Benchmark
+    public void sendOneMWaiting() {
+        executor.execute(addWaitingTask);
+        try {
+            for(int i = 0; i<Run.OFFER_COUNT; i++) {
+                while(msgQueue.poll(1L, TimeUnit.MICROSECONDS) != Run.LONGVAL) {
+                    ;
+                }
+            }
+        } catch (final InterruptedException ex) {
+            throw new RuntimeException("Test failed due to interrupt.", ex);
         }
     }
 

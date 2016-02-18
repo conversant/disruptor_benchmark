@@ -34,16 +34,25 @@ public class LinkedTransferQueueBenchmark {
     private BlockingQueue<Long> msgQueue;
 
     private final Runnable addTask = () -> {
-        try {
-            for(int i = 0; i<Run.OFFER_COUNT; i++) {
-                while(!msgQueue.offer(Run.LONGVAL, 1, TimeUnit.MICROSECONDS)) {
-                    Thread.yield();
-                }
+        for(int i = 0; i<Run.OFFER_COUNT; i++) {
+            while(!msgQueue.offer(Run.LONGVAL)) {
+                ;
             }
-        } catch(InterruptedException ex) {
-            throw new RuntimeException("Fail!");
         }
     };
+
+    private final Runnable addWaitingTask = () -> {
+        try {
+            for(int i = 0; i<Run.OFFER_COUNT; i++) {
+                while(!msgQueue.offer(Run.LONGVAL, 1L, TimeUnit.MICROSECONDS)) {
+                    ;
+                }
+            }
+        } catch(final InterruptedException ex) {
+            throw new RuntimeException("Test failed due to interrupt.", ex);
+        }
+    };
+
 
     @Setup
     public void setup() {
@@ -54,15 +63,26 @@ public class LinkedTransferQueueBenchmark {
     @Benchmark
     public void sendOneM() {
         executor.execute(addTask);
+        for(int i = 0; i<Run.OFFER_COUNT; i++) {
+            while(msgQueue.poll() != Run.LONGVAL) {
+                ;
+            }
+        }
+    }
+
+
+    @Benchmark
+    public void sendOneMWaiting() {
+        executor.execute(addWaitingTask);
 
         try {
-            for(int i=0; i<Run.OFFER_COUNT; i++) {
-                while(msgQueue.poll(1, TimeUnit.MICROSECONDS) != Run.LONGVAL) {
-                    Thread.yield();
+            for(int i = 0; i<Run.OFFER_COUNT; i++) {
+                while(msgQueue.poll(1L, TimeUnit.MICROSECONDS) != Run.LONGVAL) {
+                    ;
                 }
             }
-        } catch(InterruptedException ex) {
-            throw new RuntimeException("Fail!");
+        } catch(final InterruptedException ex) {
+            throw new RuntimeException("Test failed due to interrupt.", ex);
         }
     }
 

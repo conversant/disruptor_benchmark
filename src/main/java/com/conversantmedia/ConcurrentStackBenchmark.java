@@ -1,5 +1,8 @@
 package com.conversantmedia;
 
+import com.conversantmedia.util.concurrent.BlockingStack;
+import com.conversantmedia.util.concurrent.ConcurrentStack;
+import com.conversantmedia.util.concurrent.DisruptorBlockingQueue;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
 import org.openjdk.jmh.annotations.Fork;
@@ -12,9 +15,7 @@ import org.openjdk.jmh.annotations.State;
 import org.openjdk.jmh.annotations.TearDown;
 import org.openjdk.jmh.annotations.Warmup;
 
-import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -28,16 +29,14 @@ import java.util.concurrent.TimeUnit;
 @Fork(Run.FORK)
 @Warmup(iterations=Run.WARM_ITER)
 @Measurement(iterations = Run.MEAS_ITER)
-public class ArrayBlockingQueueBenchmark {
-
+public class ConcurrentStackBenchmark {
 
     private ExecutorService executor;
-
-    private BlockingQueue<Long> msgQueue;
+    private BlockingStack<Long> msgStack;
 
     private final Runnable addTask = () -> {
         for(int i = 0; i<Run.OFFER_COUNT; i++) {
-            while(!msgQueue.offer(Run.LONGVAL)) {
+            while(!msgStack.push(Run.LONGVAL)) {
                 ;
             }
         }
@@ -46,7 +45,7 @@ public class ArrayBlockingQueueBenchmark {
     private final Runnable addWaitingTask = () -> {
         try {
             for(int i = 0; i<Run.OFFER_COUNT; i++) {
-                while(!msgQueue.offer(Run.LONGVAL, 1L, TimeUnit.MICROSECONDS)) {
+                while(!msgStack.push(Run.LONGVAL, 1L, TimeUnit.MICROSECONDS)) {
                     ;
                 }
             }
@@ -58,34 +57,33 @@ public class ArrayBlockingQueueBenchmark {
     @Setup
     public void setup() {
         executor = Executors.newFixedThreadPool(Run.NTHREAD);
-        msgQueue = new ArrayBlockingQueue<Long>(Run.QUEUE_SIZE);
+        msgStack = new ConcurrentStack<>(Run.QUEUE_SIZE);
     }
 
     @Benchmark
-    public void sendOneM() {
+    public void addOneM() {
         executor.execute(addTask);
-
         for(int i = 0; i<Run.OFFER_COUNT; i++) {
-            while(msgQueue.poll() != Run.LONGVAL) {
+            while(msgStack.pop() != Run.LONGVAL) {
                 ;
             }
         }
     }
 
     @Benchmark
-    public void sendOneMWaiting() {
+    public void addOneMWaiting() {
         executor.execute(addWaitingTask);
-
         try {
             for(int i = 0; i<Run.OFFER_COUNT; i++) {
-                while(msgQueue.poll(1L, TimeUnit.MICROSECONDS) != Run.LONGVAL) {
+                while(msgStack.pop(1L, TimeUnit.MICROSECONDS) != Run.LONGVAL) {
                     ;
                 }
             }
-        } catch (final InterruptedException ex) {
+        } catch(final InterruptedException ex) {
             throw new RuntimeException("Test failed due to interrupt.", ex);
         }
     }
+
 
     @TearDown
     public void tearDown() {
