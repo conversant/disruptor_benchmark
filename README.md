@@ -22,9 +22,7 @@ model name	: Intel(R) Core(TM) i7-4600U CPU @ 2.10GHz
 stepping	: 1
 microcode	: 0x17
 cpu MHz		: 3285.140
-cache size	: 4096 KB
-
-...
+cache size	: 4096 KB 
 ```
 
 ```$ perf stat taskset 0x5 java -jar target/benchmarks.jar
