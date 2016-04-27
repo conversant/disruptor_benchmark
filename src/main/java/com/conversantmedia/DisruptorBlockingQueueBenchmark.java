@@ -17,8 +17,8 @@ import org.openjdk.jmh.annotations.Warmup;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.LinkedTransferQueue;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Created by jcairns on 1/15/16.
@@ -42,6 +42,15 @@ public class DisruptorBlockingQueueBenchmark {
         }
     };
 
+    private final Runnable multiAddTask = () -> {
+        for(int i = 0; i<Run.OFFER_COUNT/Run.MULTITHREAD; i++) {
+            while(!msgQueue.offer(Run.LONGVAL)) {
+                ;
+            }
+        }
+    };
+
+
     private final Runnable addWaitingTask = () -> {
         try {
             for(int i = 0; i<Run.OFFER_COUNT; i++) {
@@ -57,7 +66,7 @@ public class DisruptorBlockingQueueBenchmark {
 
     @Setup
     public void setup() {
-        executor = Executors.newFixedThreadPool(Run.NTHREAD);
+        executor = Executors.newFixedThreadPool(2*Run.MULTITHREAD);
         msgQueue = new DisruptorBlockingQueue<Long>(Run.QUEUE_SIZE);
     }
 
@@ -69,6 +78,24 @@ public class DisruptorBlockingQueueBenchmark {
                 ;
             }
         }
+    }
+
+    @Benchmark
+    public void addOneMNThread() {
+        final AtomicInteger nFinished = new AtomicInteger();
+        for(int j=0; j<Run.MULTITHREAD; j++) {
+            executor.execute(multiAddTask);
+            executor.execute(() -> {
+                for(int i = 0; i<Run.OFFER_COUNT/Run.MULTITHREAD; i++) {
+                    while (msgQueue.poll() != Run.LONGVAL) {
+                        ;
+                    }
+                    nFinished.incrementAndGet();
+                }
+            });
+        }
+        while(nFinished.get() < Run.MULTITHREAD)
+            Thread.yield();
     }
 
     @Benchmark
