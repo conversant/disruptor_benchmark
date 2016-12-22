@@ -5,7 +5,7 @@
 
     <groupId>com.conversant</groupId>
     <artifactId>disruptor_benchmark</artifactId>
-    <version>1.2.8-SNAPSHOT</version>
+    <version>1.2.9-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>JMH Disruptor Benchmark</name>
@@ -29,7 +29,8 @@
         <dependency>
             <groupId>com.conversantmedia</groupId>
             <artifactId>disruptor</artifactId>
-            <version>1.2.8-SNAPSHOT</version>
+            <version>1.2.9</version>
+            <classifier>jdk8</classifier>
         </dependency>
         <dependency>
             <groupId>com.googlecode.disruptor</groupId>
@@ -40,7 +41,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <jmh.version>1.11.3</jmh.version>
+        <jmh.version>1.17</jmh.version>
         <javac.target>1.8</javac.target>
         <uberjar.name>benchmarks</uberjar.name>
     </properties>

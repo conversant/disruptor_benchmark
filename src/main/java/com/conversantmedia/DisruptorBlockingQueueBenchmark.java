@@ -67,7 +67,7 @@ public class DisruptorBlockingQueueBenchmark {
     @Setup
     public void setup() {
         executor = Executors.newFixedThreadPool(2*Run.MULTITHREAD);
-        msgQueue = new DisruptorBlockingQueue<Long>(Run.QUEUE_SIZE);
+        msgQueue = new DisruptorBlockingQueue<>(Run.QUEUE_SIZE, SpinPolicy.SPINNING);
     }
 
     @Benchmark

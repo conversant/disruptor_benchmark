@@ -57,7 +57,7 @@ public class PushPullBlockingQueueBenchmark {
     @Setup
     public void setup() {
         executor = Executors.newSingleThreadExecutor();
-        msgQueue = new PushPullBlockingQueue<Long>(Run.QUEUE_SIZE);
+        msgQueue = new PushPullBlockingQueue<>(Run.QUEUE_SIZE, SpinPolicy.SPINNING);
     }
 
     @Benchmark
