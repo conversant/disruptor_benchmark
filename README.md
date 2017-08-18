@@ -11,603 +11,742 @@ Run:
 ```$ java -jar target/benchmarks.jar```
 
 
-# sample output
+# sample output (Broadwell)
 ```$ cat /proc/cpuinfo
 
-processor	: 0
-vendor_id	: GenuineIntel
-cpu family	: 6
-model		: 69
-model name	: Intel(R) Core(TM) i7-4600U CPU @ 2.10GHz
-stepping	: 1
-microcode	: 0x17
-cpu MHz		: 3285.140
-cache size	: 4096 KB 
+processor       : 0
+vendor_id       : GenuineIntel
+cpu family      : 6
+model           : 79
+model name      : Intel(R) Xeon(R) CPU E5-2680 v4 @ 2.40GHz
+stepping        : 1
+microcode       : 0xb00001e
+cpu MHz         : 3300.000
+cache size      : 35840 KB
 ```
 
-```$ perf stat taskset 0x5 java -jar target/benchmarks.jar
-# JMH 1.11.2 (released 132 days ago, please consider updating!)
-# VM version: JDK 1.8.0_74, VM 25.74-b02
-# VM invoker: /usr/lib/jvm/java-8-oracle/jre/bin/java
-# VM options: <none>
-# Warmup: 3 iterations, 1 s each
-# Measurement: 8 iterations, 1 s each
+```$ taskset 0x5 java -server -XX:-RestrictContended -jar benchmarks.jar
+# JMH version: 1.19
+# VM version: JDK 1.8.0_121, VM 25.121-b13
+# VM invoker: /usr/java/jdk1.8.0_121/jre/bin/java
+# VM options: -XX:-RestrictContended
+# Warmup: 8 iterations, 1 s each
+# Measurement: 15 iterations, 1 s each
 # Timeout: 10 min per iteration
 # Threads: 1 thread, will synchronize iterations
 # Benchmark mode: Average time, time/op
 # Benchmark: com.conversantmedia.ArrayBlockingQueueBenchmark.sendOneM
 
-# Run progress: 0.00% complete, ETA 00:04:24
-# Fork: 1 of 2
-# Warmup Iteration   1: 120.392 ms/op
-# Warmup Iteration   2: 97.314 ms/op
-# Warmup Iteration   3: 95.834 ms/op
-Iteration   1: 96.064 ms/op
-Iteration   2: 95.927 ms/op
-Iteration   3: 96.324 ms/op
-Iteration   4: 96.964 ms/op
-Iteration   5: 96.176 ms/op
-Iteration   6: 96.376 ms/op
-Iteration   7: 95.872 ms/op
-Iteration   8: 95.715 ms/op
-
-# Run progress: 4.17% complete, ETA 00:04:36
-# Fork: 2 of 2
-# Warmup Iteration   1: 127.389 ms/op
-# Warmup Iteration   2: 105.396 ms/op
-# Warmup Iteration   3: 101.620 ms/op
-Iteration   1: 102.166 ms/op
-Iteration   2: 101.271 ms/op
-Iteration   3: 100.889 ms/op
-Iteration   4: 100.896 ms/op
-Iteration   5: 100.975 ms/op
-Iteration   6: 102.001 ms/op
-Iteration   7: 102.084 ms/op
-Iteration   8: 101.495 ms/op
+# Run progress: 0.00% complete, ETA 00:06:08
+# Fork: 1 of 1
+# Warmup Iteration   1: 455.034 ms/op
+# Warmup Iteration   2: 444.139 ms/op
+# Warmup Iteration   3: 427.296 ms/op
+# Warmup Iteration   4: 417.742 ms/op
+# Warmup Iteration   5: 345.306 ms/op
+# Warmup Iteration   6: 339.912 ms/op
+# Warmup Iteration   7: 357.221 ms/op
+# Warmup Iteration   8: 342.482 ms/op
+Iteration   1: 356.235 ms/op
+Iteration   2: 343.283 ms/op
+Iteration   3: 353.182 ms/op
+Iteration   4: 387.701 ms/op
+Iteration   5: 348.048 ms/op
+Iteration   6: 383.684 ms/op
+Iteration   7: 356.898 ms/op
+Iteration   8: 384.847 ms/op
+Iteration   9: 451.383 ms/op
+Iteration  10: 377.231 ms/op
+Iteration  11: 370.818 ms/op
+Iteration  12: 408.279 ms/op
+Iteration  13: 382.322 ms/op
+Iteration  14: 378.637 ms/op
+Iteration  15: 371.041 ms/op
 
 
-Result "sendOneM":
-  98.825 ±(99.9%) 2.823 ms/op [Average]
-  (min, avg, max) = (95.715, 98.825, 102.166), stdev = 2.773
-  CI (99.9%): [96.002, 101.648] (assumes normal distribution)
+Result "com.conversantmedia.ArrayBlockingQueueBenchmark.sendOneM":
+  376.906 ±(99.9%) 28.876 ms/op [Average]
+  (min, avg, max) = (343.283, 376.906, 451.383), stdev = 27.011
+  CI (99.9%): [348.030, 405.782] (assumes normal distribution)
 
 
-# JMH 1.11.2 (released 132 days ago, please consider updating!)
-# VM version: JDK 1.8.0_74, VM 25.74-b02
-# VM invoker: /usr/lib/jvm/java-8-oracle/jre/bin/java
-# VM options: <none>
-# Warmup: 3 iterations, 1 s each
-# Measurement: 8 iterations, 1 s each
+# JMH version: 1.19
+# VM version: JDK 1.8.0_121, VM 25.121-b13
+# VM invoker: /usr/java/jdk1.8.0_121/jre/bin/java
+# VM options: -XX:-RestrictContended
+# Warmup: 8 iterations, 1 s each
+# Measurement: 15 iterations, 1 s each
 # Timeout: 10 min per iteration
 # Threads: 1 thread, will synchronize iterations
 # Benchmark mode: Average time, time/op
 # Benchmark: com.conversantmedia.ArrayBlockingQueueBenchmark.sendOneMWaiting
 
-# Run progress: 8.33% complete, ETA 00:04:20
-# Fork: 1 of 2
-# Warmup Iteration   1: 216.535 ms/op
-# Warmup Iteration   2: 101.950 ms/op
-# Warmup Iteration   3: 100.255 ms/op
-Iteration   1: 96.101 ms/op
-Iteration   2: 95.523 ms/op
-Iteration   3: 96.451 ms/op
-Iteration   4: 96.833 ms/op
-Iteration   5: 97.311 ms/op
-Iteration   6: 95.333 ms/op
-Iteration   7: 97.382 ms/op
-Iteration   8: 95.812 ms/op
-
-# Run progress: 12.50% complete, ETA 00:04:09
-# Fork: 2 of 2
-# Warmup Iteration   1: 171.589 ms/op
-# Warmup Iteration   2: 128.097 ms/op
-# Warmup Iteration   3: 120.151 ms/op
-Iteration   1: 115.163 ms/op
-Iteration   2: 115.196 ms/op
-Iteration   3: 119.922 ms/op
-Iteration   4: 116.878 ms/op
-Iteration   5: 116.071 ms/op
-Iteration   6: 116.655 ms/op
-Iteration   7: 117.013 ms/op
-Iteration   8: 116.765 ms/op
+# Run progress: 6.25% complete, ETA 00:06:42
+# Fork: 1 of 1
+# Warmup Iteration   1: 270.334 ms/op
+# Warmup Iteration   2: 270.158 ms/op
+# Warmup Iteration   3: 273.083 ms/op
+# Warmup Iteration   4: 310.080 ms/op
+# Warmup Iteration   5: 310.582 ms/op
+# Warmup Iteration   6: 310.168 ms/op
+# Warmup Iteration   7: 353.476 ms/op
+# Warmup Iteration   8: 391.738 ms/op
+Iteration   1: 364.012 ms/op
+Iteration   2: 371.624 ms/op
+Iteration   3: 368.054 ms/op
+Iteration   4: 369.810 ms/op
+Iteration   5: 371.915 ms/op
+Iteration   6: 358.242 ms/op
+Iteration   7: 367.717 ms/op
+Iteration   8: 376.737 ms/op
+Iteration   9: 407.342 ms/op
+Iteration  10: 399.067 ms/op
+Iteration  11: 404.018 ms/op
+Iteration  12: 406.058 ms/op
+Iteration  13: 287.710 ms/op
+Iteration  14: 283.110 ms/op
+Iteration  15: 282.335 ms/op
 
 
-Result "sendOneMWaiting":
-  106.526 ±(99.9%) 10.771 ms/op [Average]
-  (min, avg, max) = (95.333, 106.526, 119.922), stdev = 10.579
-  CI (99.9%): [95.754, 117.297] (assumes normal distribution)
+Result "com.conversantmedia.ArrayBlockingQueueBenchmark.sendOneMWaiting":
+  361.183 ±(99.9%) 45.868 ms/op [Average]
+  (min, avg, max) = (282.335, 361.183, 407.342), stdev = 42.905
+  CI (99.9%): [315.315, 407.052] (assumes normal distribution)
 
 
-# JMH 1.11.2 (released 132 days ago, please consider updating!)
-# VM version: JDK 1.8.0_74, VM 25.74-b02
-# VM invoker: /usr/lib/jvm/java-8-oracle/jre/bin/java
-# VM options: <none>
-# Warmup: 3 iterations, 1 s each
-# Measurement: 8 iterations, 1 s each
+# JMH version: 1.19
+# VM version: JDK 1.8.0_121, VM 25.121-b13
+# VM invoker: /usr/java/jdk1.8.0_121/jre/bin/java
+# VM options: -XX:-RestrictContended
+# Warmup: 8 iterations, 1 s each
+# Measurement: 15 iterations, 1 s each
 # Timeout: 10 min per iteration
 # Threads: 1 thread, will synchronize iterations
 # Benchmark mode: Average time, time/op
 # Benchmark: com.conversantmedia.ConcurrentStackBenchmark.addOneM
 
-# Run progress: 16.67% complete, ETA 00:03:57
-# Fork: 1 of 2
-# Warmup Iteration   1: 106.466 ms/op
-# Warmup Iteration   2: 99.423 ms/op
-# Warmup Iteration   3: 98.643 ms/op
-Iteration   1: 98.983 ms/op
-Iteration   2: 99.873 ms/op
-Iteration   3: 98.072 ms/op
-Iteration   4: 97.323 ms/op
-Iteration   5: 97.222 ms/op
-Iteration   6: 97.530 ms/op
-Iteration   7: 97.713 ms/op
-Iteration   8: 97.499 ms/op
-
-# Run progress: 20.83% complete, ETA 00:03:46
-# Fork: 2 of 2
-# Warmup Iteration   1: 168.165 ms/op
-# Warmup Iteration   2: 113.479 ms/op
-# Warmup Iteration   3: 112.349 ms/op
-Iteration   1: 114.180 ms/op
-Iteration   2: 113.643 ms/op
-Iteration   3: 119.454 ms/op
-Iteration   4: 113.163 ms/op
-Iteration   5: 114.355 ms/op
-Iteration   6: 115.655 ms/op
-Iteration   7: 114.981 ms/op
-Iteration   8: 113.454 ms/op
+# Run progress: 12.50% complete, ETA 00:06:16
+# Fork: 1 of 1
+# Warmup Iteration   1: 189.340 ms/op
+# Warmup Iteration   2: 182.687 ms/op
+# Warmup Iteration   3: 181.750 ms/op
+# Warmup Iteration   4: 179.348 ms/op
+# Warmup Iteration   5: 178.483 ms/op
+# Warmup Iteration   6: 161.591 ms/op
+# Warmup Iteration   7: 165.522 ms/op
+# Warmup Iteration   8: 160.904 ms/op
+Iteration   1: 160.527 ms/op
+Iteration   2: 185.419 ms/op
+Iteration   3: 163.050 ms/op
+Iteration   4: 160.718 ms/op
+Iteration   5: 161.942 ms/op
+Iteration   6: 159.787 ms/op
+Iteration   7: 179.299 ms/op
+Iteration   8: 179.713 ms/op
+Iteration   9: 164.172 ms/op
+Iteration  10: 165.264 ms/op
+Iteration  11: 163.507 ms/op
+Iteration  12: 162.853 ms/op
+Iteration  13: 163.858 ms/op
+Iteration  14: 182.990 ms/op
+Iteration  15: 186.658 ms/op
 
 
-Result "addOneM":
-  106.444 ±(99.9%) 8.986 ms/op [Average]
-  (min, avg, max) = (97.222, 106.444, 119.454), stdev = 8.826
-  CI (99.9%): [97.457, 115.430] (assumes normal distribution)
+Result "com.conversantmedia.ConcurrentStackBenchmark.addOneM":
+  169.317 ±(99.9%) 10.837 ms/op [Average]
+  (min, avg, max) = (159.787, 169.317, 186.658), stdev = 10.137
+  CI (99.9%): [158.480, 180.154] (assumes normal distribution)
 
 
-# JMH 1.11.2 (released 132 days ago, please consider updating!)
-# VM version: JDK 1.8.0_74, VM 25.74-b02
-# VM invoker: /usr/lib/jvm/java-8-oracle/jre/bin/java
-# VM options: <none>
-# Warmup: 3 iterations, 1 s each
-# Measurement: 8 iterations, 1 s each
+# JMH version: 1.19
+# VM version: JDK 1.8.0_121, VM 25.121-b13
+# VM invoker: /usr/java/jdk1.8.0_121/jre/bin/java
+# VM options: -XX:-RestrictContended
+# Warmup: 8 iterations, 1 s each
+# Measurement: 15 iterations, 1 s each
 # Timeout: 10 min per iteration
 # Threads: 1 thread, will synchronize iterations
 # Benchmark mode: Average time, time/op
 # Benchmark: com.conversantmedia.ConcurrentStackBenchmark.addOneMWaiting
 
-# Run progress: 25.00% complete, ETA 00:03:33
-# Fork: 1 of 2
-# Warmup Iteration   1: 91.425 ms/op
-# Warmup Iteration   2: 61.615 ms/op
-# Warmup Iteration   3: 60.066 ms/op
-Iteration   1: 61.688 ms/op
-Iteration   2: 59.687 ms/op
-Iteration   3: 59.820 ms/op
-Iteration   4: 59.903 ms/op
-Iteration   5: 60.965 ms/op
-Iteration   6: 60.194 ms/op
-Iteration   7: 59.324 ms/op
-Iteration   8: 59.651 ms/op
-
-# Run progress: 29.17% complete, ETA 00:03:21
-# Fork: 2 of 2
-# Warmup Iteration   1: 112.028 ms/op
-# Warmup Iteration   2: 59.842 ms/op
-# Warmup Iteration   3: 56.691 ms/op
-Iteration   1: 57.344 ms/op
-Iteration   2: 56.839 ms/op
-Iteration   3: 56.883 ms/op
-Iteration   4: 56.985 ms/op
-Iteration   5: 56.909 ms/op
-Iteration   6: 56.802 ms/op
-Iteration   7: 57.070 ms/op
-Iteration   8: 57.224 ms/op
+# Run progress: 18.75% complete, ETA 00:05:45
+# Fork: 1 of 1
+# Warmup Iteration   1: 299.820 ms/op
+# Warmup Iteration   2: 259.335 ms/op
+# Warmup Iteration   3: 274.119 ms/op
+# Warmup Iteration   4: 292.301 ms/op
+# Warmup Iteration   5: 246.564 ms/op
+# Warmup Iteration   6: 247.076 ms/op
+# Warmup Iteration   7: 246.598 ms/op
+# Warmup Iteration   8: 278.024 ms/op
+Iteration   1: 281.445 ms/op
+Iteration   2: 261.775 ms/op
+Iteration   3: 245.541 ms/op
+Iteration   4: 246.569 ms/op
+Iteration   5: 246.229 ms/op
+Iteration   6: 244.840 ms/op
+Iteration   7: 246.533 ms/op
+Iteration   8: 246.190 ms/op
+Iteration   9: 276.603 ms/op
+Iteration  10: 273.883 ms/op
+Iteration  11: 278.749 ms/op
+Iteration  12: 273.065 ms/op
+Iteration  13: 272.591 ms/op
+Iteration  14: 274.070 ms/op
+Iteration  15: 272.180 ms/op
 
 
-Result "addOneMWaiting":
-  58.581 ±(99.9%) 1.748 ms/op [Average]
-  (min, avg, max) = (56.802, 58.581, 61.688), stdev = 1.717
-  CI (99.9%): [56.832, 60.329] (assumes normal distribution)
+Result "com.conversantmedia.ConcurrentStackBenchmark.addOneMWaiting":
+  262.684 ±(99.9%) 15.731 ms/op [Average]
+  (min, avg, max) = (244.840, 262.684, 281.445), stdev = 14.715
+  CI (99.9%): [246.953, 278.415] (assumes normal distribution)
 
 
-# JMH 1.11.2 (released 132 days ago, please consider updating!)
-# VM version: JDK 1.8.0_74, VM 25.74-b02
-# VM invoker: /usr/lib/jvm/java-8-oracle/jre/bin/java
-# VM options: <none>
-# Warmup: 3 iterations, 1 s each
-# Measurement: 8 iterations, 1 s each
+# JMH version: 1.19
+# VM version: JDK 1.8.0_121, VM 25.121-b13
+# VM invoker: /usr/java/jdk1.8.0_121/jre/bin/java
+# VM options: -XX:-RestrictContended
+# Warmup: 8 iterations, 1 s each
+# Measurement: 15 iterations, 1 s each
 # Timeout: 10 min per iteration
 # Threads: 1 thread, will synchronize iterations
 # Benchmark mode: Average time, time/op
 # Benchmark: com.conversantmedia.DisruptorBlockingQueueBenchmark.addOneM
 
-# Run progress: 33.33% complete, ETA 00:03:08
-# Fork: 1 of 2
-# Warmup Iteration   1: 18.406 ms/op
-# Warmup Iteration   2: 15.428 ms/op
-# Warmup Iteration   3: 15.055 ms/op
-Iteration   1: 15.668 ms/op
-Iteration   2: 16.773 ms/op
-Iteration   3: 16.180 ms/op
-Iteration   4: 16.296 ms/op
-Iteration   5: 16.292 ms/op
-Iteration   6: 16.285 ms/op
-Iteration   7: 16.574 ms/op
-Iteration   8: 16.256 ms/op
-
-# Run progress: 37.50% complete, ETA 00:02:56
-# Fork: 2 of 2
-# Warmup Iteration   1: 17.686 ms/op
-# Warmup Iteration   2: 15.663 ms/op
-# Warmup Iteration   3: 14.984 ms/op
-Iteration   1: 15.673 ms/op
-Iteration   2: 15.602 ms/op
-Iteration   3: 15.406 ms/op
-Iteration   4: 17.361 ms/op
-Iteration   5: 16.568 ms/op
-Iteration   6: 15.322 ms/op
-Iteration   7: 15.368 ms/op
-Iteration   8: 15.561 ms/op
+# Run progress: 25.00% complete, ETA 00:05:19
+# Fork: 1 of 1
+# Warmup Iteration   1: 35.813 ms/op
+# Warmup Iteration   2: 31.866 ms/op
+# Warmup Iteration   3: 32.554 ms/op
+# Warmup Iteration   4: 31.192 ms/op
+# Warmup Iteration   5: 32.634 ms/op
+# Warmup Iteration   6: 30.267 ms/op
+# Warmup Iteration   7: 29.655 ms/op
+# Warmup Iteration   8: 32.590 ms/op
+Iteration   1: 33.165 ms/op
+Iteration   2: 33.554 ms/op
+Iteration   3: 33.024 ms/op
+Iteration   4: 37.097 ms/op
+Iteration   5: 30.223 ms/op
+Iteration   6: 32.125 ms/op
+Iteration   7: 29.963 ms/op
+Iteration   8: 30.000 ms/op
+Iteration   9: 29.208 ms/op
+Iteration  10: 29.035 ms/op
+Iteration  11: 30.436 ms/op
+Iteration  12: 29.458 ms/op
+Iteration  13: 29.540 ms/op
+Iteration  14: 30.024 ms/op
+Iteration  15: 30.365 ms/op
 
 
-Result "addOneM":
-  16.074 ±(99.9%) 0.596 ms/op [Average]
-  (min, avg, max) = (15.322, 16.074, 17.361), stdev = 0.586
-  CI (99.9%): [15.478, 16.670] (assumes normal distribution)
+Result "com.conversantmedia.DisruptorBlockingQueueBenchmark.addOneM":
+  31.148 ±(99.9%) 2.379 ms/op [Average]
+  (min, avg, max) = (29.035, 31.148, 37.097), stdev = 2.226
+  CI (99.9%): [28.768, 33.527] (assumes normal distribution)
 
 
-# JMH 1.11.2 (released 132 days ago, please consider updating!)
-# VM version: JDK 1.8.0_74, VM 25.74-b02
-# VM invoker: /usr/lib/jvm/java-8-oracle/jre/bin/java
-# VM options: <none>
-# Warmup: 3 iterations, 1 s each
-# Measurement: 8 iterations, 1 s each
+# JMH version: 1.19
+# VM version: JDK 1.8.0_121, VM 25.121-b13
+# VM invoker: /usr/java/jdk1.8.0_121/jre/bin/java
+# VM options: -XX:-RestrictContended
+# Warmup: 8 iterations, 1 s each
+# Measurement: 15 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: com.conversantmedia.DisruptorBlockingQueueBenchmark.addOneMNThread
+
+# Run progress: 31.25% complete, ETA 00:04:46
+# Fork: 1 of 1
+# Warmup Iteration   1: 578.815 ms/op
+# Warmup Iteration   2: 1463.647 ms/op
+# Warmup Iteration   3: 1440.840 ms/op
+# Warmup Iteration   4: 1172.061 ms/op
+# Warmup Iteration   5: 1719.889 ms/op
+# Warmup Iteration   6: 1530.590 ms/op
+# Warmup Iteration   7: 1199.826 ms/op
+# Warmup Iteration   8: 1166.003 ms/op
+Iteration   1: 1821.219 ms/op
+Iteration   2: 1331.282 ms/op
+Iteration   3: 1153.869 ms/op
+Iteration   4: 1338.984 ms/op
+Iteration   5: 1694.697 ms/op
+Iteration   6: 1657.809 ms/op
+Iteration   7: 1453.638 ms/op
+Iteration   8: 1321.298 ms/op
+Iteration   9: 1018.574 ms/op
+Iteration  10: 1589.678 ms/op
+Iteration  11: 1400.665 ms/op
+Iteration  12: 1296.671 ms/op
+Iteration  13: 1354.680 ms/op
+Iteration  14: 1050.474 ms/op
+Iteration  15: 1265.617 ms/op
+
+
+Result "com.conversantmedia.DisruptorBlockingQueueBenchmark.addOneMNThread":
+  1383.277 ±(99.9%) 245.628 ms/op [Average]
+  (min, avg, max) = (1018.574, 1383.277, 1821.219), stdev = 229.761
+  CI (99.9%): [1137.649, 1628.905] (assumes normal distribution)
+
+
+# JMH version: 1.19
+# VM version: JDK 1.8.0_121, VM 25.121-b13
+# VM invoker: /usr/java/jdk1.8.0_121/jre/bin/java
+# VM options: -XX:-RestrictContended
+# Warmup: 8 iterations, 1 s each
+# Measurement: 15 iterations, 1 s each
 # Timeout: 10 min per iteration
 # Threads: 1 thread, will synchronize iterations
 # Benchmark mode: Average time, time/op
 # Benchmark: com.conversantmedia.DisruptorBlockingQueueBenchmark.addOneMWaiting
 
-# Run progress: 41.67% complete, ETA 00:02:44
-# Fork: 1 of 2
-# Warmup Iteration   1: 23.468 ms/op
-# Warmup Iteration   2: 17.222 ms/op
-# Warmup Iteration   3: 17.361 ms/op
-Iteration   1: 17.353 ms/op
-Iteration   2: 17.853 ms/op
-Iteration   3: 17.321 ms/op
-Iteration   4: 17.557 ms/op
-Iteration   5: 30.718 ms/op
-Iteration   6: 30.713 ms/op
-Iteration   7: 31.054 ms/op
-Iteration   8: 28.506 ms/op
-
-# Run progress: 45.83% complete, ETA 00:02:32
-# Fork: 2 of 2
-# Warmup Iteration   1: 23.265 ms/op
-# Warmup Iteration   2: 17.668 ms/op
-# Warmup Iteration   3: 17.688 ms/op
-Iteration   1: 18.059 ms/op
-Iteration   2: 18.056 ms/op
-Iteration   3: 17.355 ms/op
-Iteration   4: 17.389 ms/op
-Iteration   5: 17.349 ms/op
-Iteration   6: 17.372 ms/op
-Iteration   7: 17.413 ms/op
-Iteration   8: 17.387 ms/op
+# Run progress: 37.50% complete, ETA 00:04:33
+# Fork: 1 of 1
+# Warmup Iteration   1: 29.650 ms/op
+# Warmup Iteration   2: 53.389 ms/op
+# Warmup Iteration   3: 35.376 ms/op
+# Warmup Iteration   4: 44.650 ms/op
+# Warmup Iteration   5: 51.150 ms/op
+# Warmup Iteration   6: 34.556 ms/op
+# Warmup Iteration   7: 32.501 ms/op
+# Warmup Iteration   8: 32.490 ms/op
+Iteration   1: 39.166 ms/op
+Iteration   2: 40.705 ms/op
+Iteration   3: 35.097 ms/op
+Iteration   4: 35.113 ms/op
+Iteration   5: 43.784 ms/op
+Iteration   6: 44.137 ms/op
+Iteration   7: 45.905 ms/op
+Iteration   8: 34.086 ms/op
+Iteration   9: 29.969 ms/op
+Iteration  10: 35.746 ms/op
+Iteration  11: 32.098 ms/op
+Iteration  12: 27.489 ms/op
+Iteration  13: 34.763 ms/op
+Iteration  14: 29.450 ms/op
+Iteration  15: 26.976 ms/op
 
 
-Result "addOneMWaiting":
-  20.716 ±(99.9%) 5.817 ms/op [Average]
-  (min, avg, max) = (17.321, 20.716, 31.054), stdev = 5.713
-  CI (99.9%): [14.899, 26.533] (assumes normal distribution)
+Result "com.conversantmedia.DisruptorBlockingQueueBenchmark.addOneMWaiting":
+  35.632 ±(99.9%) 6.454 ms/op [Average]
+  (min, avg, max) = (26.976, 35.632, 45.905), stdev = 6.037
+  CI (99.9%): [29.178, 42.086] (assumes normal distribution)
 
 
-# JMH 1.11.2 (released 132 days ago, please consider updating!)
-# VM version: JDK 1.8.0_74, VM 25.74-b02
-# VM invoker: /usr/lib/jvm/java-8-oracle/jre/bin/java
-# VM options: <none>
-# Warmup: 3 iterations, 1 s each
-# Measurement: 8 iterations, 1 s each
+# JMH version: 1.19
+# VM version: JDK 1.8.0_121, VM 25.121-b13
+# VM invoker: /usr/java/jdk1.8.0_121/jre/bin/java
+# VM options: -XX:-RestrictContended
+# Warmup: 8 iterations, 1 s each
+# Measurement: 15 iterations, 1 s each
 # Timeout: 10 min per iteration
 # Threads: 1 thread, will synchronize iterations
 # Benchmark mode: Average time, time/op
 # Benchmark: com.conversantmedia.LMAXDisruptorBenchmark.addOneM
 
-# Run progress: 50.00% complete, ETA 00:02:20
-# Fork: 1 of 2
-# Warmup Iteration   1: 23.740 ms/op
-# Warmup Iteration   2: 21.726 ms/op
-# Warmup Iteration   3: 21.644 ms/op
-Iteration   1: 21.780 ms/op
-Iteration   2: 21.854 ms/op
-Iteration   3: 21.844 ms/op
-Iteration   4: 21.755 ms/op
-Iteration   5: 21.835 ms/op
-Iteration   6: 21.751 ms/op
-Iteration   7: 21.893 ms/op
-Iteration   8: 21.647 ms/op
-
-# Run progress: 54.17% complete, ETA 00:02:08
-# Fork: 2 of 2
-# Warmup Iteration   1: 23.784 ms/op
-# Warmup Iteration   2: 21.757 ms/op
-# Warmup Iteration   3: 21.669 ms/op
-Iteration   1: 21.775 ms/op
-Iteration   2: 21.744 ms/op
-Iteration   3: 21.634 ms/op
-Iteration   4: 21.779 ms/op
-Iteration   5: 22.889 ms/op
-Iteration   6: 39.058 ms/op
-Iteration   7: 39.127 ms/op
-Iteration   8: 39.038 ms/op
+# Run progress: 43.75% complete, ETA 00:04:01
+# Fork: 1 of 1
+# Warmup Iteration   1: 68.010 ms/op
+# Warmup Iteration   2: 61.085 ms/op
+# Warmup Iteration   3: 64.392 ms/op
+# Warmup Iteration   4: 63.965 ms/op
+# Warmup Iteration   5: 60.738 ms/op
+# Warmup Iteration   6: 60.626 ms/op
+# Warmup Iteration   7: 60.663 ms/op
+# Warmup Iteration   8: 60.541 ms/op
+Iteration   1: 60.685 ms/op
+Iteration   2: 62.533 ms/op
+Iteration   3: 64.375 ms/op
+Iteration   4: 62.230 ms/op
+Iteration   5: 60.600 ms/op
+Iteration   6: 60.578 ms/op
+Iteration   7: 60.602 ms/op
+Iteration   8: 60.745 ms/op
+Iteration   9: 60.654 ms/op
+Iteration  10: 60.682 ms/op
+Iteration  11: 60.624 ms/op
+Iteration  12: 60.631 ms/op
+Iteration  13: 60.582 ms/op
+Iteration  14: 60.669 ms/op
+Iteration  15: 60.748 ms/op
 
 
-Result "addOneM":
-  25.088 ±(99.9%) 7.071 ms/op [Average]
-  (min, avg, max) = (21.634, 25.088, 39.127), stdev = 6.945
-  CI (99.9%): [18.016, 32.159] (assumes normal distribution)
+Result "com.conversantmedia.LMAXDisruptorBenchmark.addOneM":
+  61.129 ±(99.9%) 1.161 ms/op [Average]
+  (min, avg, max) = (60.578, 61.129, 64.375), stdev = 1.086
+  CI (99.9%): [59.968, 62.290] (assumes normal distribution)
 
 
-# JMH 1.11.2 (released 132 days ago, please consider updating!)
-# VM version: JDK 1.8.0_74, VM 25.74-b02
-# VM invoker: /usr/lib/jvm/java-8-oracle/jre/bin/java
-# VM options: <none>
-# Warmup: 3 iterations, 1 s each
-# Measurement: 8 iterations, 1 s each
+# JMH version: 1.19
+# VM version: JDK 1.8.0_121, VM 25.121-b13
+# VM invoker: /usr/java/jdk1.8.0_121/jre/bin/java
+# VM options: -XX:-RestrictContended
+# Warmup: 8 iterations, 1 s each
+# Measurement: 15 iterations, 1 s each
 # Timeout: 10 min per iteration
 # Threads: 1 thread, will synchronize iterations
 # Benchmark mode: Average time, time/op
 # Benchmark: com.conversantmedia.LMAXDisruptorPushPullBenchmark.addOneM
 
-# Run progress: 58.33% complete, ETA 00:01:56
-# Fork: 1 of 2
-# Warmup Iteration   1: 17.235 ms/op
-# Warmup Iteration   2: 13.993 ms/op
-# Warmup Iteration   3: 13.943 ms/op
-Iteration   1: 13.945 ms/op
-Iteration   2: 14.004 ms/op
-Iteration   3: 13.992 ms/op
-Iteration   4: 13.572 ms/op
-Iteration   5: 11.182 ms/op
-Iteration   6: 11.203 ms/op
-Iteration   7: 11.231 ms/op
-Iteration   8: 11.215 ms/op
-
-# Run progress: 62.50% complete, ETA 00:01:44
-# Fork: 2 of 2
-# Warmup Iteration   1: 12.297 ms/op
-# Warmup Iteration   2: 11.241 ms/op
-# Warmup Iteration   3: 11.184 ms/op
-Iteration   1: 11.171 ms/op
-Iteration   2: 11.179 ms/op
-Iteration   3: 11.170 ms/op
-Iteration   4: 11.192 ms/op
-Iteration   5: 11.204 ms/op
-Iteration   6: 11.208 ms/op
-Iteration   7: 11.239 ms/op
-Iteration   8: 11.249 ms/op
+# Run progress: 50.00% complete, ETA 00:03:32
+# Fork: 1 of 1
+# Warmup Iteration   1: 36.210 ms/op
+# Warmup Iteration   2: 34.277 ms/op
+# Warmup Iteration   3: 33.508 ms/op
+# Warmup Iteration   4: 33.969 ms/op
+# Warmup Iteration   5: 34.355 ms/op
+# Warmup Iteration   6: 34.305 ms/op
+# Warmup Iteration   7: 34.154 ms/op
+# Warmup Iteration   8: 33.823 ms/op
+Iteration   1: 32.221 ms/op
+Iteration   2: 34.269 ms/op
+Iteration   3: 34.352 ms/op
+Iteration   4: 34.001 ms/op
+Iteration   5: 34.193 ms/op
+Iteration   6: 34.161 ms/op
+Iteration   7: 34.119 ms/op
+Iteration   8: 34.184 ms/op
+Iteration   9: 33.750 ms/op
+Iteration  10: 33.987 ms/op
+Iteration  11: 34.105 ms/op
+Iteration  12: 33.666 ms/op
+Iteration  13: 34.114 ms/op
+Iteration  14: 34.209 ms/op
+Iteration  15: 34.025 ms/op
 
 
-Result "addOneM":
-  11.872 ±(99.9%) 1.222 ms/op [Average]
-  (min, avg, max) = (11.170, 11.872, 14.004), stdev = 1.200
-  CI (99.9%): [10.650, 13.094] (assumes normal distribution)
+Result "com.conversantmedia.LMAXDisruptorPushPullBenchmark.addOneM":
+  33.957 ±(99.9%) 0.549 ms/op [Average]
+  (min, avg, max) = (32.221, 33.957, 34.352), stdev = 0.513
+  CI (99.9%): [33.408, 34.506] (assumes normal distribution)
 
 
-# JMH 1.11.2 (released 132 days ago, please consider updating!)
-# VM version: JDK 1.8.0_74, VM 25.74-b02
-# VM invoker: /usr/lib/jvm/java-8-oracle/jre/bin/java
-# VM options: <none>
-# Warmup: 3 iterations, 1 s each
-# Measurement: 8 iterations, 1 s each
+# JMH version: 1.19
+# VM version: JDK 1.8.0_121, VM 25.121-b13
+# VM invoker: /usr/java/jdk1.8.0_121/jre/bin/java
+# VM options: -XX:-RestrictContended
+# Warmup: 8 iterations, 1 s each
+# Measurement: 15 iterations, 1 s each
 # Timeout: 10 min per iteration
 # Threads: 1 thread, will synchronize iterations
 # Benchmark mode: Average time, time/op
 # Benchmark: com.conversantmedia.LinkedTransferQueueBenchmark.sendOneM
 
-# Run progress: 66.67% complete, ETA 00:01:33
-# Fork: 1 of 2
-# Warmup Iteration   1: 114.146 ms/op
-# Warmup Iteration   2: 45.536 ms/op
-# Warmup Iteration   3: 59.483 ms/op
-Iteration   1: 37.120 ms/op
-Iteration   2: 75.358 ms/op
-Iteration   3: 40.641 ms/op
-Iteration   4: 39.725 ms/op
-Iteration   5: 47.337 ms/op
-Iteration   6: 46.116 ms/op
-Iteration   7: 37.441 ms/op
-Iteration   8: 36.844 ms/op
-
-# Run progress: 70.83% complete, ETA 00:01:21
-# Fork: 2 of 2
-# Warmup Iteration   1: 50.178 ms/op
-# Warmup Iteration   2: 55.107 ms/op
-# Warmup Iteration   3: 42.919 ms/op
-Iteration   1: 46.114 ms/op
-Iteration   2: 127.638 ms/op
-Iteration   3: 68.935 ms/op
-Iteration   4: 70.206 ms/op
-Iteration   5: 69.887 ms/op
-Iteration   6: 43.552 ms/op
-Iteration   7: 38.288 ms/op
-Iteration   8: 38.638 ms/op
+# Run progress: 56.25% complete, ETA 00:03:03
+# Fork: 1 of 1
+# Warmup Iteration   1: 148.909 ms/op
+# Warmup Iteration   2: 123.343 ms/op
+# Warmup Iteration   3: 127.123 ms/op
+# Warmup Iteration   4: 125.901 ms/op
+# Warmup Iteration   5: 135.434 ms/op
+# Warmup Iteration   6: 173.252 ms/op
+# Warmup Iteration   7: 181.735 ms/op
+# Warmup Iteration   8: 137.006 ms/op
+Iteration   1: 126.609 ms/op
+Iteration   2: 125.785 ms/op
+Iteration   3: 132.421 ms/op
+Iteration   4: 125.707 ms/op
+Iteration   5: 128.216 ms/op
+Iteration   6: 120.927 ms/op
+Iteration   7: 124.363 ms/op
+Iteration   8: 128.100 ms/op
+Iteration   9: 123.651 ms/op
+Iteration  10: 121.845 ms/op
+Iteration  11: 121.568 ms/op
+Iteration  12: 125.169 ms/op
+Iteration  13: 127.324 ms/op
+Iteration  14: 129.615 ms/op
+Iteration  15: 121.364 ms/op
 
 
-Result "sendOneM":
-  53.990 ±(99.9%) 24.399 ms/op [Average]
-  (min, avg, max) = (36.844, 53.990, 127.638), stdev = 23.963
-  CI (99.9%): [29.591, 78.389] (assumes normal distribution)
+Result "com.conversantmedia.LinkedTransferQueueBenchmark.sendOneM":
+  125.511 ±(99.9%) 3.561 ms/op [Average]
+  (min, avg, max) = (120.927, 125.511, 132.421), stdev = 3.331
+  CI (99.9%): [121.950, 129.072] (assumes normal distribution)
 
 
-# JMH 1.11.2 (released 132 days ago, please consider updating!)
-# VM version: JDK 1.8.0_74, VM 25.74-b02
-# VM invoker: /usr/lib/jvm/java-8-oracle/jre/bin/java
-# VM options: <none>
-# Warmup: 3 iterations, 1 s each
-# Measurement: 8 iterations, 1 s each
+# JMH version: 1.19
+# VM version: JDK 1.8.0_121, VM 25.121-b13
+# VM invoker: /usr/java/jdk1.8.0_121/jre/bin/java
+# VM options: -XX:-RestrictContended
+# Warmup: 8 iterations, 1 s each
+# Measurement: 15 iterations, 1 s each
 # Timeout: 10 min per iteration
 # Threads: 1 thread, will synchronize iterations
 # Benchmark mode: Average time, time/op
 # Benchmark: com.conversantmedia.LinkedTransferQueueBenchmark.sendOneMWaiting
 
-# Run progress: 75.00% complete, ETA 00:01:09
-# Fork: 1 of 2
-# Warmup Iteration   1: 60.278 ms/op
-# Warmup Iteration   2: 43.796 ms/op
-# Warmup Iteration   3: 42.708 ms/op
-Iteration   1: 53.482 ms/op
-Iteration   2: 43.225 ms/op
-Iteration   3: 43.778 ms/op
-Iteration   4: 43.305 ms/op
-Iteration   5: 43.265 ms/op
-Iteration   6: 43.095 ms/op
-Iteration   7: 43.274 ms/op
-Iteration   8: 43.561 ms/op
-
-# Run progress: 79.17% complete, ETA 00:00:58
-# Fork: 2 of 2
-# Warmup Iteration   1: 61.389 ms/op
-# Warmup Iteration   2: 46.371 ms/op
-# Warmup Iteration   3: 46.439 ms/op
-Iteration   1: 46.153 ms/op
-Iteration   2: 72.548 ms/op
-Iteration   3: 82.339 ms/op
-Iteration   4: 82.637 ms/op
-Iteration   5: 80.071 ms/op
-Iteration   6: 45.905 ms/op
-Iteration   7: 45.119 ms/op
-Iteration   8: 44.297 ms/op
+# Run progress: 62.50% complete, ETA 00:02:36
+# Fork: 1 of 1
+# Warmup Iteration   1: 106.065 ms/op
+# Warmup Iteration   2: 153.057 ms/op
+# Warmup Iteration   3: 138.356 ms/op
+# Warmup Iteration   4: 139.127 ms/op
+# Warmup Iteration   5: 133.255 ms/op
+# Warmup Iteration   6: 130.590 ms/op
+# Warmup Iteration   7: 124.569 ms/op
+# Warmup Iteration   8: 123.731 ms/op
+Iteration   1: 166.696 ms/op
+Iteration   2: 126.946 ms/op
+Iteration   3: 125.239 ms/op
+Iteration   4: 132.497 ms/op
+Iteration   5: 149.021 ms/op
+Iteration   6: 132.312 ms/op
+Iteration   7: 133.889 ms/op
+Iteration   8: 168.473 ms/op
+Iteration   9: 188.927 ms/op
+Iteration  10: 189.132 ms/op
+Iteration  11: 186.859 ms/op
+Iteration  12: 134.594 ms/op
+Iteration  13: 128.342 ms/op
+Iteration  14: 155.537 ms/op
+Iteration  15: 131.376 ms/op
 
 
-Result "sendOneMWaiting":
-  53.503 ±(99.9%) 16.070 ms/op [Average]
-  (min, avg, max) = (43.095, 53.503, 82.637), stdev = 15.783
-  CI (99.9%): [37.433, 69.573] (assumes normal distribution)
+Result "com.conversantmedia.LinkedTransferQueueBenchmark.sendOneMWaiting":
+  149.989 ±(99.9%) 25.768 ms/op [Average]
+  (min, avg, max) = (125.239, 149.989, 189.132), stdev = 24.103
+  CI (99.9%): [124.222, 175.757] (assumes normal distribution)
 
 
-# JMH 1.11.2 (released 132 days ago, please consider updating!)
-# VM version: JDK 1.8.0_74, VM 25.74-b02
-# VM invoker: /usr/lib/jvm/java-8-oracle/jre/bin/java
-# VM options: <none>
-# Warmup: 3 iterations, 1 s each
-# Measurement: 8 iterations, 1 s each
+# JMH version: 1.19
+# VM version: JDK 1.8.0_121, VM 25.121-b13
+# VM invoker: /usr/java/jdk1.8.0_121/jre/bin/java
+# VM options: -XX:-RestrictContended
+# Warmup: 8 iterations, 1 s each
+# Measurement: 15 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: com.conversantmedia.MPMCBlockingQueueBenchmark.addOneM
+
+# Run progress: 68.75% complete, ETA 00:02:09
+# Fork: 1 of 1
+# Warmup Iteration   1: 54.432 ms/op
+# Warmup Iteration   2: 54.440 ms/op
+# Warmup Iteration   3: 51.986 ms/op
+# Warmup Iteration   4: 51.710 ms/op
+# Warmup Iteration   5: 51.665 ms/op
+# Warmup Iteration   6: 51.733 ms/op
+# Warmup Iteration   7: 51.653 ms/op
+# Warmup Iteration   8: 51.635 ms/op
+Iteration   1: 51.617 ms/op
+Iteration   2: 51.727 ms/op
+Iteration   3: 52.263 ms/op
+Iteration   4: 51.653 ms/op
+Iteration   5: 52.129 ms/op
+Iteration   6: 51.751 ms/op
+Iteration   7: 51.658 ms/op
+Iteration   8: 51.745 ms/op
+Iteration   9: 51.603 ms/op
+Iteration  10: 52.069 ms/op
+Iteration  11: 52.456 ms/op
+Iteration  12: 53.155 ms/op
+Iteration  13: 52.232 ms/op
+Iteration  14: 57.696 ms/op
+Iteration  15: 52.255 ms/op
+
+
+Result "com.conversantmedia.MPMCBlockingQueueBenchmark.addOneM":
+  52.401 ±(99.9%) 1.630 ms/op [Average]
+  (min, avg, max) = (51.603, 52.401, 57.696), stdev = 1.524
+  CI (99.9%): [50.771, 54.031] (assumes normal distribution)
+
+
+# JMH version: 1.19
+# VM version: JDK 1.8.0_121, VM 25.121-b13
+# VM invoker: /usr/java/jdk1.8.0_121/jre/bin/java
+# VM options: -XX:-RestrictContended
+# Warmup: 8 iterations, 1 s each
+# Measurement: 15 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: com.conversantmedia.MPMCBlockingQueueBenchmark.addOneMNThread
+
+# Run progress: 75.00% complete, ETA 00:01:43
+# Fork: 1 of 1
+# Warmup Iteration   1: 204.238 ms/op
+# Warmup Iteration   2: 260.413 ms/op
+# Warmup Iteration   3: 246.878 ms/op
+# Warmup Iteration   4: 241.960 ms/op
+# Warmup Iteration   5: 336.127 ms/op
+# Warmup Iteration   6: 222.743 ms/op
+# Warmup Iteration   7: 283.140 ms/op
+# Warmup Iteration   8: 292.502 ms/op
+Iteration   1: 262.615 ms/op
+Iteration   2: 325.283 ms/op
+Iteration   3: 252.948 ms/op
+Iteration   4: 265.691 ms/op
+Iteration   5: 383.929 ms/op
+Iteration   6: 402.604 ms/op
+Iteration   7: 262.340 ms/op
+Iteration   8: 290.601 ms/op
+Iteration   9: 368.229 ms/op
+Iteration  10: 350.241 ms/op
+Iteration  11: 287.425 ms/op
+Iteration  12: 316.427 ms/op
+Iteration  13: 310.631 ms/op
+Iteration  14: 341.238 ms/op
+Iteration  15: 258.134 ms/op
+
+
+Result "com.conversantmedia.MPMCBlockingQueueBenchmark.addOneMNThread":
+  311.889 ±(99.9%) 52.342 ms/op [Average]
+  (min, avg, max) = (252.948, 311.889, 402.604), stdev = 48.960
+  CI (99.9%): [259.548, 364.231] (assumes normal distribution)
+
+
+# JMH version: 1.19
+# VM version: JDK 1.8.0_121, VM 25.121-b13
+# VM invoker: /usr/java/jdk1.8.0_121/jre/bin/java
+# VM options: -XX:-RestrictContended
+# Warmup: 8 iterations, 1 s each
+# Measurement: 15 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: com.conversantmedia.MPMCBlockingQueueBenchmark.addOneMWaiting
+
+# Run progress: 81.25% complete, ETA 00:01:17
+# Fork: 1 of 1
+# Warmup Iteration   1: 50.292 ms/op
+# Warmup Iteration   2: 44.959 ms/op
+# Warmup Iteration   3: 44.947 ms/op
+# Warmup Iteration   4: 44.770 ms/op
+# Warmup Iteration   5: 44.556 ms/op
+# Warmup Iteration   6: 44.703 ms/op
+# Warmup Iteration   7: 44.565 ms/op
+# Warmup Iteration   8: 44.570 ms/op
+Iteration   1: 44.575 ms/op
+Iteration   2: 44.618 ms/op
+Iteration   3: 44.971 ms/op
+Iteration   4: 45.553 ms/op
+Iteration   5: 44.456 ms/op
+Iteration   6: 44.495 ms/op
+Iteration   7: 44.468 ms/op
+Iteration   8: 44.884 ms/op
+Iteration   9: 44.939 ms/op
+Iteration  10: 44.731 ms/op
+Iteration  11: 44.305 ms/op
+Iteration  12: 44.808 ms/op
+Iteration  13: 44.276 ms/op
+Iteration  14: 44.833 ms/op
+Iteration  15: 44.261 ms/op
+
+
+Result "com.conversantmedia.MPMCBlockingQueueBenchmark.addOneMWaiting":
+  44.678 ±(99.9%) 0.364 ms/op [Average]
+  (min, avg, max) = (44.261, 44.678, 45.553), stdev = 0.340
+  CI (99.9%): [44.314, 45.042] (assumes normal distribution)
+
+
+# JMH version: 1.19
+# VM version: JDK 1.8.0_121, VM 25.121-b13
+# VM invoker: /usr/java/jdk1.8.0_121/jre/bin/java
+# VM options: -XX:-RestrictContended
+# Warmup: 8 iterations, 1 s each
+# Measurement: 15 iterations, 1 s each
 # Timeout: 10 min per iteration
 # Threads: 1 thread, will synchronize iterations
 # Benchmark mode: Average time, time/op
 # Benchmark: com.conversantmedia.PushPullBlockingQueueBenchmark.sendOneM
 
-# Run progress: 83.33% complete, ETA 00:00:46
-# Fork: 1 of 2
-# Warmup Iteration   1: 9.820 ms/op
-# Warmup Iteration   2: 8.729 ms/op
-# Warmup Iteration   3: 8.777 ms/op
-Iteration   1: 8.811 ms/op
-Iteration   2: 9.606 ms/op
-Iteration   3: 15.645 ms/op
-Iteration   4: 15.609 ms/op
-Iteration   5: 15.578 ms/op
-Iteration   6: 13.016 ms/op
-Iteration   7: 8.670 ms/op
-Iteration   8: 8.673 ms/op
-
-# Run progress: 87.50% complete, ETA 00:00:34
-# Fork: 2 of 2
-# Warmup Iteration   1: 9.401 ms/op
-# Warmup Iteration   2: 8.751 ms/op
-# Warmup Iteration   3: 8.688 ms/op
-Iteration   1: 8.711 ms/op
-Iteration   2: 8.690 ms/op
-Iteration   3: 8.696 ms/op
-Iteration   4: 8.718 ms/op
-Iteration   5: 8.714 ms/op
-Iteration   6: 8.760 ms/op
-Iteration   7: 8.768 ms/op
-Iteration   8: 8.733 ms/op
+# Run progress: 87.50% complete, ETA 00:00:51
+# Fork: 1 of 1
+# Warmup Iteration   1: 115.431 ms/op
+# Warmup Iteration   2: 113.153 ms/op
+# Warmup Iteration   3: 112.018 ms/op
+# Warmup Iteration   4: 112.492 ms/op
+# Warmup Iteration   5: 111.797 ms/op
+# Warmup Iteration   6: 111.924 ms/op
+# Warmup Iteration   7: 111.756 ms/op
+# Warmup Iteration   8: 112.063 ms/op
+Iteration   1: 111.767 ms/op
+Iteration   2: 111.863 ms/op
+Iteration   3: 111.868 ms/op
+Iteration   4: 111.858 ms/op
+Iteration   5: 111.576 ms/op
+Iteration   6: 111.823 ms/op
+Iteration   7: 111.833 ms/op
+Iteration   8: 111.916 ms/op
+Iteration   9: 111.911 ms/op
+Iteration  10: 111.631 ms/op
+Iteration  11: 111.773 ms/op
+Iteration  12: 111.729 ms/op
+Iteration  13: 112.250 ms/op
+Iteration  14: 112.673 ms/op
+Iteration  15: 111.802 ms/op
 
 
-Result "sendOneM":
-  10.337 ±(99.9%) 2.878 ms/op [Average]
-  (min, avg, max) = (8.670, 10.337, 15.645), stdev = 2.827
-  CI (99.9%): [7.459, 13.215] (assumes normal distribution)
+Result "com.conversantmedia.PushPullBlockingQueueBenchmark.sendOneM":
+  111.885 ±(99.9%) 0.283 ms/op [Average]
+  (min, avg, max) = (111.576, 111.885, 112.673), stdev = 0.265
+  CI (99.9%): [111.602, 112.168] (assumes normal distribution)
 
 
-# JMH 1.11.2 (released 132 days ago, please consider updating!)
-# VM version: JDK 1.8.0_74, VM 25.74-b02
-# VM invoker: /usr/lib/jvm/java-8-oracle/jre/bin/java
-# VM options: <none>
-# Warmup: 3 iterations, 1 s each
-# Measurement: 8 iterations, 1 s each
+# JMH version: 1.19
+# VM version: JDK 1.8.0_121, VM 25.121-b13
+# VM invoker: /usr/java/jdk1.8.0_121/jre/bin/java
+# VM options: -XX:-RestrictContended
+# Warmup: 8 iterations, 1 s each
+# Measurement: 15 iterations, 1 s each
 # Timeout: 10 min per iteration
 # Threads: 1 thread, will synchronize iterations
 # Benchmark mode: Average time, time/op
 # Benchmark: com.conversantmedia.PushPullBlockingQueueBenchmark.sendOneMWaiting
 
-# Run progress: 91.67% complete, ETA 00:00:23
-# Fork: 1 of 2
-# Warmup Iteration   1: 16.833 ms/op
-# Warmup Iteration   2: 23.041 ms/op
-# Warmup Iteration   3: 23.360 ms/op
-Iteration   1: 23.459 ms/op
-Iteration   2: 23.415 ms/op
-Iteration   3: 13.183 ms/op
-Iteration   4: 13.004 ms/op
-Iteration   5: 13.014 ms/op
-Iteration   6: 12.948 ms/op
-Iteration   7: 13.031 ms/op
-Iteration   8: 13.016 ms/op
-
-# Run progress: 95.83% complete, ETA 00:00:11
-# Fork: 2 of 2
-# Warmup Iteration   1: 17.634 ms/op
-# Warmup Iteration   2: 13.266 ms/op
-# Warmup Iteration   3: 23.414 ms/op
-Iteration   1: 23.494 ms/op
-Iteration   2: 23.629 ms/op
-Iteration   3: 22.444 ms/op
-Iteration   4: 14.565 ms/op
-Iteration   5: 12.917 ms/op
-Iteration   6: 12.993 ms/op
-Iteration   7: 12.969 ms/op
-Iteration   8: 12.939 ms/op
+# Run progress: 93.75% complete, ETA 00:00:25
+# Fork: 1 of 1
+# Warmup Iteration   1: 129.431 ms/op
+# Warmup Iteration   2: 120.089 ms/op
+# Warmup Iteration   3: 119.267 ms/op
+# Warmup Iteration   4: 121.043 ms/op
+# Warmup Iteration   5: 118.906 ms/op
+# Warmup Iteration   6: 120.183 ms/op
+# Warmup Iteration   7: 122.231 ms/op
+# Warmup Iteration   8: 118.832 ms/op
+Iteration   1: 118.456 ms/op
+Iteration   2: 118.213 ms/op
+Iteration   3: 119.135 ms/op
+Iteration   4: 118.612 ms/op
+Iteration   5: 121.866 ms/op
+Iteration   6: 122.043 ms/op
+Iteration   7: 123.503 ms/op
+Iteration   8: 122.520 ms/op
+Iteration   9: 118.520 ms/op
+Iteration  10: 118.376 ms/op
+Iteration  11: 118.471 ms/op
+Iteration  12: 118.397 ms/op
+Iteration  13: 121.858 ms/op
+Iteration  14: 122.141 ms/op
+Iteration  15: 121.950 ms/op
 
 
-Result "sendOneMWaiting":
-  16.314 ±(99.9%) 4.967 ms/op [Average]
-  (min, avg, max) = (12.917, 16.314, 23.629), stdev = 4.878
-  CI (99.9%): [11.347, 21.281] (assumes normal distribution)
+Result "com.conversantmedia.PushPullBlockingQueueBenchmark.sendOneMWaiting":
+  120.271 ±(99.9%) 2.119 ms/op [Average]
+  (min, avg, max) = (118.213, 120.271, 123.503), stdev = 1.982
+  CI (99.9%): [118.152, 122.390] (assumes normal distribution)
 
 
-# Run complete. Total time: 00:04:38
+# Run complete. Total time: 00:06:49
 
-Benchmark                                       Mode  Cnt    Score    Error  Units
-ArrayBlockingQueueBenchmark.sendOneM            avgt   16   98.825 ±  2.823  ms/op
-ArrayBlockingQueueBenchmark.sendOneMWaiting     avgt   16  106.526 ± 10.771  ms/op
-ConcurrentStackBenchmark.addOneM                avgt   16  106.444 ±  8.986  ms/op
-ConcurrentStackBenchmark.addOneMWaiting         avgt   16   58.581 ±  1.748  ms/op
-DisruptorBlockingQueueBenchmark.addOneM         avgt   16   16.074 ±  0.596  ms/op
-DisruptorBlockingQueueBenchmark.addOneMWaiting  avgt   16   20.716 ±  5.817  ms/op
-LMAXDisruptorBenchmark.addOneM                  avgt   16   25.088 ±  7.071  ms/op
-LMAXDisruptorPushPullBenchmark.addOneM          avgt   16   11.872 ±  1.222  ms/op
-LinkedTransferQueueBenchmark.sendOneM           avgt   16   53.990 ± 24.399  ms/op
-LinkedTransferQueueBenchmark.sendOneMWaiting    avgt   16   53.503 ± 16.070  ms/op
-PushPullBlockingQueueBenchmark.sendOneM         avgt   16   10.337 ±  2.878  ms/op
-PushPullBlockingQueueBenchmark.sendOneMWaiting  avgt   16   16.314 ±  4.967  ms/op
-failed to read counter stalled-cycles-frontend
-failed to read counter stalled-cycles-backend
-
- Performance counter stats for 'taskset 0x5 java -jar target/benchmarks.jar':
-
-     550164.750732      task-clock (msec)         #    1.973 CPUs utilized          
-           388,812      context-switches          #    0.707 K/sec                  
-             5,135      cpu-migrations            #    0.009 K/sec                  
-           799,691      page-faults               #    0.001 M/sec                  
- 1,684,446,528,660      cycles                    #    3.062 GHz                    
-   <not supported>      stalled-cycles-frontend  
-   <not supported>      stalled-cycles-backend   
- 1,914,886,508,465      instructions              #    1.14  insns per cycle        
-   352,381,336,915      branches                  #  640.501 M/sec                  
-     3,718,527,750      branch-misses             #    1.06% of all branches        
-
-     278.796275179 seconds time elapsed
+Benchmark                                       Mode  Cnt     Score     Error  Units
+ArrayBlockingQueueBenchmark.sendOneM            avgt   15   376.906 ±  28.876  ms/op
+ArrayBlockingQueueBenchmark.sendOneMWaiting     avgt   15   361.183 ±  45.868  ms/op
+ConcurrentStackBenchmark.addOneM                avgt   15   169.317 ±  10.837  ms/op
+ConcurrentStackBenchmark.addOneMWaiting         avgt   15   262.684 ±  15.731  ms/op
+DisruptorBlockingQueueBenchmark.addOneM         avgt   15    31.148 ±   2.379  ms/op
+DisruptorBlockingQueueBenchmark.addOneMNThread  avgt   15  1383.277 ± 245.628  ms/op
+DisruptorBlockingQueueBenchmark.addOneMWaiting  avgt   15    35.632 ±   6.454  ms/op
+LMAXDisruptorBenchmark.addOneM                  avgt   15    61.129 ±   1.161  ms/op
+LMAXDisruptorPushPullBenchmark.addOneM          avgt   15    33.957 ±   0.549  ms/op
+LinkedTransferQueueBenchmark.sendOneM           avgt   15   125.511 ±   3.561  ms/op
+LinkedTransferQueueBenchmark.sendOneMWaiting    avgt   15   149.989 ±  25.768  ms/op
+MPMCBlockingQueueBenchmark.addOneM              avgt   15    52.401 ±   1.630  ms/op
+MPMCBlockingQueueBenchmark.addOneMNThread       avgt   15   311.889 ±  52.342  ms/op
+MPMCBlockingQueueBenchmark.addOneMWaiting       avgt   15    44.678 ±   0.364  ms/op
+PushPullBlockingQueueBenchmark.sendOneM         avgt   15   111.885 ±   0.283  ms/op
+PushPullBlockingQueueBenchmark.sendOneMWaiting  avgt   15   120.271 ±   2.119  ms/op
 ```
