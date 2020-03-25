@@ -29,8 +29,7 @@
         <dependency>
             <groupId>com.conversantmedia</groupId>
             <artifactId>disruptor</artifactId>
-            <version>1.2.16-SNAPSHOT</version>
-	    <classifier>jdk10</classifier>
+            <version>1.2.16</version>
         </dependency>
         <dependency>
             <groupId>com.googlecode.disruptor</groupId>
