@@ -11,7 +11,7 @@
     <name>JMH Disruptor Benchmark</name>
 
     <prerequisites>
-        <maven>3.0</maven>
+        <maven>3.0.5</maven>
     </prerequisites>
 
     <dependencies>
@@ -60,7 +60,7 @@
                         <configuration>
                             <rules>
                                 <requireMavenVersion>
-                                    <version>3.0</version>
+                                    <version>3.0.5</version>
                                 </requireMavenVersion>
                             </rules>
                         </configuration>
