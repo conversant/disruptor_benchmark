@@ -6,4 +6,4 @@ ENV JAVA_HOME=/usr/lib/jvm/default-java
 
 COPY . .
 
-CMD mvn -U clean compile test verify package
+CMD mvn -U clean compile package &&  java -jar /build/target/benchmarks.jar

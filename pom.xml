@@ -30,7 +30,6 @@
             <groupId>com.conversantmedia</groupId>
             <artifactId>disruptor</artifactId>
             <version>1.2.21</version>
-	    <type>xml</type>
         </dependency>
         <dependency>
             <groupId>com.googlecode.disruptor</groupId>
