@@ -4,8 +4,8 @@ package com.conversantmedia;
  * Created by jcairns on 1/15/16.
  */
 public final class Run {
-    static final int MULTITHREAD = 4*Runtime.getRuntime().availableProcessors();
-    static final int NTHREAD = Math.min(Runtime.getRuntime().availableProcessors(), 4);
+    static final int MULTITHREAD = 2*Runtime.getRuntime().availableProcessors();
+    static final int NTHREAD = Math.min(Runtime.getRuntime().availableProcessors(), 2);
     static final int FORK = 1;
     static final int WARM_ITER = 8;
     static final int MEAS_ITER = 15;

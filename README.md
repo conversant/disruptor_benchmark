@@ -1,14 +1,28 @@
 # disruptor_benchmark
 JMH Benchmark for Conversant Disruptor and LMAX Disruptor
 
-Build:
+## Install Jar under test
 
-```$ mvn -U clean package```
+```shell
+$ mvn install:install-file  \
+      -Dfile=./disruptor-1.2.22-SNAPSHOT.jar \
+      -DgroupId=com.conversantmedia \
+      -DartifactId=disruptor \
+      -Dversion=1.2.22-SNAPSHOT \
+      -Dpackaging=jar
+```
 
+## Build
 
-Run:
+```shell
+$ mvn -U clean package
+```
 
-```$ java -jar target/benchmarks.jar```
+## Run
+
+```shell
+$ java -jar target/benchmarks.jar
+```
 
 
 # sample output (Broadwell)

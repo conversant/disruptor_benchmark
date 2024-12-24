@@ -1,8 +1,9 @@
 package com.conversantmedia;
 
-import com.conversantmedia.util.concurrent.BlockingStack;
-import com.conversantmedia.util.concurrent.ConcurrentStack;
-import com.conversantmedia.util.concurrent.DisruptorBlockingQueue;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
 import org.openjdk.jmh.annotations.Fork;
@@ -15,10 +16,8 @@ import org.openjdk.jmh.annotations.State;
 import org.openjdk.jmh.annotations.TearDown;
 import org.openjdk.jmh.annotations.Warmup;
 
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
+import com.conversantmedia.util.concurrent.BlockingStack;
+import com.conversantmedia.util.concurrent.ConcurrentStack;
 
 /**
  * Created by jcairns on 1/15/16.
@@ -60,7 +59,7 @@ public class ConcurrentStackBenchmark {
         msgStack = new ConcurrentStack<>(Run.QUEUE_SIZE);
     }
 
-    @Benchmark
+    // @Benchmark
     public void addOneM() {
         executor.execute(addTask);
         for(int i = 0; i<Run.OFFER_COUNT; i++) {
@@ -70,7 +69,7 @@ public class ConcurrentStackBenchmark {
         }
     }
 
-    @Benchmark
+    // @Benchmark
     public void addOneMWaiting() {
         executor.execute(addWaitingTask);
         try {
